@@ -22,9 +22,9 @@ class KnowruClient(object):
         self.session = requests.Session()
         self.session.mount(knowru_url, self._adapter)
 
-    def run_runnable(self, runnable_name, input_data, output_if_error=None):
+    def run_runnable(self, runnable_name, input_data, output_if_error=None, timeout=None):
         try:
-            r = self.session.post('{}/api/runnable/{}/run.json/'.format(self.knowru_url, runnable_name), json={'input': input_data}, headers=self.headers)
+            r = self.session.post('{}/api/runnable/{}/run.json/'.format(self.knowru_url, runnable_name), json={'input': input_data}, headers=self.headers, timeout=timeout)
         except Exception as e:
             logger = get_timezone_logger('KnowruClient.call_runnable')
             logger.error(traceback.format_exc())
